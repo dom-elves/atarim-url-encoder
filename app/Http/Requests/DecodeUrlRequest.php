@@ -25,4 +25,31 @@ class DecodeUrlRequest extends FormRequest
             'decoded-url' => ['required','url:http,https', 'exists:urls,encoded_url'],
         ];
     }
+
+    // error messages
+    public function messages(): array
+    {
+        return [
+            'decoded-url.required' => 'The URL field is required.',
+            'decoded-url.url' => 'The URL field must be a valid URL.',
+            'decoded-url.exists' => 'The URL field must be a valid encoded URL.',
+        ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param \Illuminate\Contracts\Validation\Validator $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        $response = response()->json([
+            'errors' => $validator->errors(),
+        ], 422);
+
+        throw new \Illuminate\Validation\ValidationException($validator, $response);
+    }
 }
