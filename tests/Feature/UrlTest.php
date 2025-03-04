@@ -173,4 +173,30 @@ class UrlTest extends TestCase
                 ]
         ]); 
     }
+
+    public function test_user_can_not_decode_a_non_url(): void
+    {
+        // set a non-url
+        $not_a_url = 'justabigrandomstring12345';
+
+        // post it
+        $response = $this->post('/decode', [
+            'decoded-url' => $not_a_url,
+        ]);
+
+        // check it's not in the db
+        $this->assertDatabaseMissing('urls', [
+            'url' => $not_a_url,
+        ]);
+
+        // assert response code & message 
+        $response->assertStatus(422)
+            ->assertJson([
+                'errors' => [
+                    'decoded-url' => [
+                        'The URL field must be a valid URL.'
+                    ]
+                ]
+        ]);          
+    }
 }
