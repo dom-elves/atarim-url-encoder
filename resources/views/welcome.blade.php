@@ -28,14 +28,18 @@
         </form>
         <div id="encode-success-message" style="display: none; color: green;"></div>
         <div id="encode-error-message" style="display: none; color: red;"></div>
-       <form method="POST" action="{{ route('decode') }}">
+       <form id="decode-form">
             @csrf
             <label for="decoder">Enter a URL to decode it:</label>
             <input type="text" id="decoder" name="decoded-url" class="border border-gray-300 p-2 rounded-lg w-full">
-        </form> 
+        </form>
+        <div id="decode-success-message" style="display: none; color: green;"></div>
+        <div id="decode-error-message" style="display: none; color: red;"></div> 
     </body>
 </html>
 <script>
+    // i'm aware this js isn't very DRY at all, but my vanilla js isn't very strong and i'm much more used to vue/inertia
+    // encode
     document.getElementById('encode-form').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -53,6 +57,28 @@
                     let errors = Object.values(error.response.data.errors).flat().join("\n");
                     document.getElementById('encode-error-message').innerText = errors;
                     document.getElementById('encode-error-message').style.display = "block";
+                }
+            });
+    });
+
+    // decode
+    document.getElementById('decode-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let formData = new FormData(this);
+        axios.post("{{ route('decode') }}", formData)
+            .then(response => {
+                if (response.data.success) {
+                    console.log(response.data);
+                    document.getElementById('decode-success-message').innerText = "Your decoded URL is: " + response.data.data.decoded_url;
+                    document.getElementById('decode-success-message').style.display = "block";
+                }
+            })
+            .catch(error => {
+                if (error.response && error.response.data.errors) {
+                    let errors = Object.values(error.response.data.errors).flat().join("\n");
+                    document.getElementById('decode-error-message').innerText = errors;
+                    document.getElementById('decode-error-message').style.display = "block";
                 }
             });
     });
