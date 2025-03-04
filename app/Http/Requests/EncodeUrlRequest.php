@@ -22,16 +22,16 @@ class EncodeUrlRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'url' => ['required','url:http,https'],
+            'encoded-url' => ['required','url:http,https'],
         ];
     }
 
     // error messages
-    public function messages()
+    public function messages(): array
     {
         return [
-            'url.required' => 'The URL field is required.',
-            'url.url' => 'The URL field must be a valid URL.',
+            'encoded-url.required' => 'The URL field is required.',
+            'encoded-url.url' => 'The URL field must be a valid URL.',
         ];
     }
 }

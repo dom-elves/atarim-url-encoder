@@ -11,11 +11,8 @@ class UrlService
         $code = Str::random(6);
         $base = 'https://short.url/';
 
-        $url = Url::create([
-            'url' => $original_url,
-            'encoded_url' => $base . $code,
-        ]);
-
+        $url = $base . $code;
+        
         return $url;
     }
 
