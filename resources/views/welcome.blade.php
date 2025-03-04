@@ -23,12 +23,16 @@
         <form method="POST" action="{{ route('encode') }}">
             @csrf
             <label for="encoder">Enter a URL to encode it:</label>
-            <input type="text" id="encoder" name="encoder" class="border border-gray-300 p-2 rounded-lg w-full">
+            <input type="text" id="encoder" name="encoded-url" class="border border-gray-300 p-2 rounded-lg w-full">
        </form>
        <form method="POST" action="{{ route('decode') }}">
             @csrf
             <label for="decoder">Enter a URL to decode it:</label>
-            <input type="text" id="decoder" name="decoder" class="border border-gray-300 p-2 rounded-lg w-full">
-        </form>
+            <input type="text" id="decoder" name="decoded-url" class="border border-gray-300 p-2 rounded-lg w-full">
+        </form> 
     </body>
+    
 </html>
+<script>
+    
+</script>

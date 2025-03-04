@@ -25,4 +25,13 @@ class EncodeUrlRequest extends FormRequest
             'url' => ['required','url:http,https'],
         ];
     }
+
+    // error messages
+    public function messages()
+    {
+        return [
+            'url.required' => 'The URL field is required.',
+            'url.url' => 'The URL field must be a valid URL.',
+        ];
+    }
 }
