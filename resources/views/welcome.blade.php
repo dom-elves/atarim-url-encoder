@@ -70,7 +70,7 @@
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data);
-                    document.getElementById('decode-success-message').innerText = "Your decoded URL is: " + response.data.data.decoded_url;
+                    document.getElementById('decode-success-message').innerText = "Your decoded URL is: " + response.data.data;
                     document.getElementById('decode-success-message').style.display = "block";
                 }
             })

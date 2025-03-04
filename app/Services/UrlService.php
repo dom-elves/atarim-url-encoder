@@ -16,8 +16,9 @@ class UrlService
         return $url;
     }
 
-    public function decode(string $encodedUrl): string
+    public function decode(string $encoded_url): string
     {
-        
+        $url = Url::where('encoded_url', $encoded_url)->first();
+        return $url->url;
     }
 }

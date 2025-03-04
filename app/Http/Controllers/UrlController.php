@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\UrlService;
 use App\Http\Requests\EncodeUrlRequest;
+use App\Http\Requests\DecodeUrlRequest;
 use App\Models\Url;
 
 class UrlController extends Controller
@@ -38,8 +39,18 @@ class UrlController extends Controller
         ]);
     }
 
-    public function decode()
+    public function decode(DecodeUrlRequest $request)
     {
-        
+        // validate the request
+        $validated = $request->validated();
+
+        // fetch the decoded url
+        $decoded_url = $this->urlService->decode($validated['decoded-url']);
+
+        // return json response
+        return response()->json([
+            'success' => true,
+            'data' => $decoded_url,
+        ]);
     }
 }
